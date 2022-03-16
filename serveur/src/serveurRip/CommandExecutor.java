@@ -19,6 +19,8 @@ public class CommandExecutor {
 				(new CommandePWD(ps, commande, user)).execute();
 			else if (commande.split(" ")[0].toLowerCase().equals("stor"))
 				(new CommandeSTOR(ps, commande, user)).execute();
+			else if (commande.split(" ")[0].toLowerCase().equals("mkdir"))
+				(new CommandeMKDIR(ps, commande, user)).execute();
 			else
 				ps.println("1 Commande introuvable");
 		} else {

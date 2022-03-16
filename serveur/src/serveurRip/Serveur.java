@@ -84,4 +84,17 @@ public class Serveur extends Thread {
 	{
 		// fermer toutes les socket et terminer l'app;
 	}
+
+	
+	public static synchronized boolean IsUserConnected(String nom) {
+		for (Serveur proc : socketHandlers) {
+			if (proc.utilisateur.getNom().equals(nom))
+				return true;
+		}
+		return false;
+	}
+
+	public static String getPath() {
+		return path;
+	}
 }

@@ -44,7 +44,7 @@
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet_rip.ConnexionController">
    <children>
-      <Label alignment="CENTER" prefHeight="32.0" prefWidth="438.0" text="Connexion au serveur FTP">
+      <Label alignment="CENTER" prefHeight="32.0" prefWidth="438.0" text="Connexion test au serveur FTP">
          <font>
             <Font size="28.0" />
          </font>
@@ -79,12 +79,12 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="champ_mdp" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
                </GridPane.margin>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="champ_identifiant" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
                </GridPane.margin>

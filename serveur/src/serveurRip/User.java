@@ -26,14 +26,17 @@ public class User {
     }
     // ex: ./utilisateurs/seb
     public String getUserPath() {
-        return Serveur.path + this.nom;
+        return new File(Serveur.getPath() + "/" + this.nom).getPath();
     }
     // ex: ./utilisateurs/seb/mon_test
     public String getAbsoluteChemin() {
-        return Serveur.path + this.nom + this.chemin; 
+        return getUserPath() + this.chemin; 
     }
     public void setChemin(String chemin) {
-        this.chemin = chemin;
+        if (chemin.length() == 0)
+            this.chemin = "/";
+        else
+            this.chemin = chemin;
     }
 
     // Vérifie que le mot de passe en argument est le même que celui du dossier utilisateur

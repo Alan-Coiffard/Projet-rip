@@ -17,39 +17,16 @@ public class App extends Application {
 
     private static Scene scene;
 
+    private static Client client;
+    public static Client getClient() { return client; }
+
     @Override
     public void start(Stage stage) throws IOException {
+        client = new Client();
 
-        // Server Host
-        final String serverHost = "localhost";
+        client.start();
 
-        Socket socketOfClient = null;
-        PrintStream ps = null;
-        BufferedReader is = null;
-        final Scanner sc = new Scanner(System.in);
-        // pour lire à partir du clavier
-
-        try {
-
-            // Send a request to connect to the server is listening
-            // on machine 'localhost' port 9999.
-            socketOfClient = new Socket(serverHost, 3030);
-
-            // Create output stream at the client (to send data to the server)
-            ps = new PrintStream(socketOfClient.getOutputStream());
-
-            // Input stream at Client (Receive data from the server).
-            is = new BufferedReader(new InputStreamReader(socketOfClient.getInputStream()));
-
-        } catch (UnknownHostException e) {
-            System.err.println("Don't know about host " + serverHost);
-            return;
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to " + serverHost);
-            return;
-        }
-
-        scene = new Scene(loadFXML("ftp"), 640, 480);
+        scene = new Scene(loadFXML("connexion"), 640, 480);
         stage.setResizable(false);
 
         stage.setScene(scene);
@@ -67,6 +44,11 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        
     }
 
+    @Override
+    public void stop(){
+        client.stopServeur();
+    }
 }

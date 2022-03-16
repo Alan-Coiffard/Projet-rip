@@ -13,7 +13,7 @@ public class CommandeUSER extends Commande {
 			return;
 
 		// Ce serveur accepte uniquement le user personne
-		String[] listeFichiers = new File(Serveur.path).list();
+		String[] listeFichiers = new File(Serveur.getPath()).list();
 		if (listeFichiers == null) // aucun dosier trouver
 		{
 			System.err.println("CommandeUSER: Aucun dossiers utilisateurs trouvés.");
@@ -25,18 +25,21 @@ public class CommandeUSER extends Commande {
 		boolean existe = false;
 
 		// Verifie l'existance de l'utilisateur dans la liste des dossiers
+		String nom_user;
 		for (int i = 0; i < listeFichiers.length; i++) {
-			System.out.println(listeFichiers[i]);
-			if (commandeArgs[0].toLowerCase().equals(listeFichiers[i].toLowerCase())) {
-				this.utilisateur.setNom(commandeArgs[0].toLowerCase());
+			nom_user = commandeArgs[0].toLowerCase();
+			if (commandeArgs[0].toLowerCase().equals(nom_user)) {
+				if (Serveur.IsUserConnected(nom_user))
+					break;
 				existe = true;
+				this.utilisateur.setNom(commandeArgs[0].toLowerCase());
 				ps.println("0 Commande user OK");
 				break;
 			}
 		}
 		
 		if (!existe) {
-			ps.println("2 L'utilisateur " + commandeArgs[0] + " n'existe pas");
+			ps.println("2 L'utilisateur " + commandeArgs[0] + " n'existe pas ou est déjà connecté.");
 			ps.println("0");
 		}		
 	}
