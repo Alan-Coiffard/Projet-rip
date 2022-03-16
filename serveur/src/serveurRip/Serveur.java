@@ -80,7 +80,7 @@ public class Serveur extends Thread {
 			System.err.println("Le client : '" + this.utilisateur.getNom() + "' s'est déconnecté.");
 			user_socket.close();
 			socketHandlers.remove(this);		
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.err.println("Le client : '" + this.utilisateur.getNom() + "' s'est déconnecté.");
 			socketHandlers.remove(this);
 		}

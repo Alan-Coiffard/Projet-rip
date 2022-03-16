@@ -71,32 +71,38 @@ public class Client {
 				// Affiche message serveur
 				do {
 					msg_serveur = is.readLine().split(" ");
-					// System.out.println(msg_serveur[0].charAt(0));
+
 					for (i = 1; i < msg_serveur.length; i++) {
 						if (msg_serveur[0].charAt(0) == '3') {
 							int port = Integer.parseInt(msg_serveur[1]);
-							Socket s = new Socket(serverHost, port);
-							String[] fichier = entree_client.split(" ");
-							FileInputStream inf = new FileInputStream(new File(fichier[1]));
-							ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
-							byte buf[] = new byte[1024];
-							int n;
-							while ((n = inf.read(buf)) != -1) {
-								out.write(buf, 0, n);
+							try {
+								Socket s = new Socket(serverHost, port);
+								String fichier = msg_serveur[2];
+								FileInputStream inf = new FileInputStream(new File(fichier));
+								ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+								byte buf[] = new byte[1024];
+								int n;
+								while ((n = inf.read(buf)) != -1) {
+									out.write(buf, 0, n);
+								}
+								inf.close();
+								out.close();
+								s.close();
+							} catch (IOException e) {
+								Socket s = new Socket(serverHost, port);								
+								s.close();
+								System.err.println("Impossible de récuperer le fichier.");
 							}
-							inf.close();
-							out.close();
-							s.close();
+							break;
 						} else if (msg_serveur[0].charAt(0) == '4') {
-							int port = Integer.parseInt(msg_serveur[1]);
-							Socket s = new Socket(serverHost, port);
-							// System.out.println(entree_client);
-							String[] fichier = entree_client.split(" ");
-							String chemin = System.getProperty("user.dir") + "/" + fichier[1];
-							// System.out.println(chemin);
-							File nouveauFichier = new File(chemin);
+							try {
+								int port = Integer.parseInt(msg_serveur[1]);
+								Socket s = new Socket(serverHost, port);
 
-							if (nouveauFichier.createNewFile()) {
+								String chemin = System.getProperty("user.dir") + "/" + msg_serveur[2];
+								System.out.println(chemin);
+								File nouveauFichier = new File(chemin);
+
 								System.out.println("Fichier créé...");
 
 								FileOutputStream fileOut = new FileOutputStream(nouveauFichier);
@@ -112,12 +118,10 @@ public class Client {
 								System.out.println("Fichier copié.");
 								fileOut.close();
 								s.close();
-
-							} else {
-								System.err.println("Le fichier existe déjà.");
-								System.err.println("Le fichier n'a pas été envoyé.");
-								// ps.println("Voulez-vous l'ecraser ? oui/non");
+							} catch (IOException e) {
+								System.err.println("Impossible de récuperer le fichier.");
 							}
+							break;
 
 						} else if (msg_serveur[0].charAt(0) == '2')
 							System.err.print(msg_serveur[i] + " ");

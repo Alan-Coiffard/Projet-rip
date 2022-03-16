@@ -15,45 +15,46 @@ public class CommandeGET extends Commande {
 			ps.println("Il manque le nom du fichier à envoyer");
 			return;
 		}
-
-		String nomFichier = this.commandeArgs[0];
-		String chemin = this.utilisateur.getAbsoluteChemin() + nomFichier;
-		System.out.println(chemin);
-		File fichierACopier = new File(chemin);
-
-		try {
-			if (fichierACopier.exists() && fichierACopier.isFile()) {
-
-				FileInputStream inf = new FileInputStream(fichierACopier);
-				int port = 5000;
-
-				ServerSocket s = new ServerSocket(port);
-				System.out.println("envoie du port");
-				ps.println("4 " + port);
-				Socket sv = s.accept();
-				System.out.print("qfg");
-				ObjectOutputStream out = new ObjectOutputStream(sv.getOutputStream());
-				byte buf[] = new byte[1024];
-				int n;
-				while ((n = inf.read(buf)) != -1) {
-					out.write(buf, 0, n);
+		for (int i = 0; i < Math.min(10, this.commandeArgs.length); i++) {
+			try {
+				String nomFichier = this.commandeArgs[i];
+				String[] nf = nomFichier.split("/");
+				File fichierACopier = new File(this.utilisateur.getAbsoluteChemin() + "/" + nomFichier);
+				String chemin = fichierACopier.getCanonicalPath();
+				
+				// Vérification de sécurite
+				String user_path = this.utilisateur.getUserPath();
+				if (!chemin.substring(0, user_path.length()).equals(user_path)) {
+					ps.println("2 chemin de fichier en dehors du dossier de l'utilisateur");
+					continue;
 				}
-				inf.close();
-				out.close();
-				s.close();
-			} else {
-				ps.println("2 Le fichier \"" + nomFichier + "\" n'existe pas");
-				ps.println("2 Pas de récuperation.");
-				// ps.println("Voulez-vous l'ecraser ? oui/non");
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		/**
-		 * TODO : faire une condition si le fichier existe déjà pour
-		 * demander ecraser ou changer le nom
-		 */
+				if (fichierACopier.exists() && fichierACopier.isFile()) {
+
+					FileInputStream inf = new FileInputStream(fichierACopier);
+					int port = 5000 + this.utilisateur.getId();
+
+					ServerSocket s = new ServerSocket(port);
+					System.out.println("envoie du port " + port + " et du nom du fichier " + nomFichier);
+					ps.println("4 " + port + " " + nf[nf.length - 1] );
+					Socket sv = s.accept();
+					ObjectOutputStream out = new ObjectOutputStream(sv.getOutputStream());
+					byte buf[] = new byte[1024];
+					int n;
+					while ((n = inf.read(buf)) != -1) {
+						out.write(buf, 0, n);
+					}
+					inf.close();
+					out.close();
+					s.close();
+				} else {
+					ps.println("2 Le fichier \"" + nomFichier + "\" n'existe pas");
+					ps.println("2 Pas de récuperation.");
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

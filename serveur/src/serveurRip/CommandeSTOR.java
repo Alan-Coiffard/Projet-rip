@@ -14,24 +14,32 @@ public class CommandeSTOR extends Commande {
 		if (this.commandeArgs.length == 0) {
 			ps.println("Il manque le nom du fichier à envoyer");
 		}
+		for (int i = 0; i < Math.min(10, this.commandeArgs.length); i++) {
 
-		String[] nomFichier = this.commandeArgs[0].split("/");
-		String chemin = this.utilisateur.getAbsoluteChemin().charAt(this.utilisateur.getAbsoluteChemin().length() - 1) == '/' 
-				? this.utilisateur.getAbsoluteChemin() + nomFichier[nomFichier.length - 1] 
-				: this.utilisateur.getAbsoluteChemin() + "/" + nomFichier[nomFichier.length - 1];
-		System.out.println(chemin);
-		File nouveauFichier = new File(chemin);
+			String[] nomFichier = this.commandeArgs[i].split("/");
+			String chemin = this.utilisateur.getAbsoluteChemin() + "/" + nomFichier[nomFichier.length - 1];
+			/*
+			 * String chemin = this.utilisateur.getAbsoluteChemin()
+			 * .charAt(this.utilisateur.getAbsoluteChemin().length() - 1) == '/'
+			 * ? this.utilisateur.getAbsoluteChemin() + nomFichier[nomFichier.length - 1]
+			 * : this.utilisateur.getAbsoluteChemin() + "/" + nomFichier[nomFichier.length -
+			 * 1];
+			 */
+			System.out.println(chemin);
+			File nouveauFichier = new File(chemin);
 
-		try {
-			if (nouveauFichier.createNewFile()) {
+			try {
+				if(nouveauFichier.exists()) {
+					ps.println("1 Le fichier existe déjà, il a été écrasé");
+				}
 				System.out.println("Fichier créé!");
 
 				FileOutputStream fileOut = new FileOutputStream(nouveauFichier);
-				int port = 3000;
+				int port = 3000 + this.utilisateur.getId();
 
 				ServerSocket s = new ServerSocket(port);
 				System.out.println("envoie du port");
-				ps.println("3 " + port);
+				ps.println("3 " + port + " " + this.commandeArgs[i]);
 				Socket sv = s.accept();
 
 				ObjectInputStream in = new ObjectInputStream(sv.getInputStream());
@@ -46,20 +54,11 @@ public class CommandeSTOR extends Commande {
 				fileOut.close();
 				s.close();
 
-			} else {
-				ps.println("2 Le fichier existe déjà.");
-				ps.println("2 Le fichier n'a pas été envoyé.");
-				// ps.println("Voulez-vous l'ecraser ? oui/non");
+			} catch (IOException e) {
+				nouveauFichier.delete();
+				System.err.println("Erreur de CommandeSTOR");
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
-		/**
-		 * TODO : faire une condition si le fichier existe déjà pour
-		 * demander ecraser ou changer le nom
-		 */
 	}
 
 }

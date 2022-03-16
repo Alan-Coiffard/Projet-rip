@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.TextFlow?>
 
-
-<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet_rip.ftpController">
+<AnchorPane fx:id="scenePane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet_rip.ftpController">
    <children>
       <SplitPane dividerPositions="0.36432160804020103" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0">
          <items>
@@ -21,16 +26,28 @@
                      <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <SplitPane dividerPositions="0.1640625" orientation="VERTICAL" prefHeight="258.0" prefWidth="287.0">
+                              <SplitPane dividerPositions="0.133177570093458" orientation="VERTICAL" prefHeight="258.0" prefWidth="287.0">
                                  <items>
-                                    <AnchorPane fx:id="chemin_serveur" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                        <children>
-                                          <Label layoutX="7.0" layoutY="12.0" text="chemin :" />
+                                          <GridPane prefHeight="30.0" prefWidth="286.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.20001220703125" minWidth="10.0" prefWidth="61.39997100830078" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.60002899169922" minWidth="10.0" prefWidth="224.60002899169922" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="chemin :" />
+                                                <TextFlow fx:id="chemin_serveur" prefHeight="30.0" prefWidth="207.0" GridPane.columnIndex="1" />
+                                             </children>
+                                          </GridPane>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                        <children>
-                                          <TextFlow fx:id="liste_serveur" prefHeight="204.0" prefWidth="285.0" />
+                                          <TreeView fx:id="liste_serveur" layoutX="6.0" layoutY="6.0" prefHeight="194.0" prefWidth="274.0" />
                                        </children>
                                     </AnchorPane>
                                  </items>
@@ -39,16 +56,28 @@
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <SplitPane dividerPositions="0.16532258064516128" orientation="VERTICAL" prefHeight="250.0" prefWidth="305.0">
+                              <SplitPane dividerPositions="0.137459807073955" orientation="VERTICAL" prefHeight="250.0" prefWidth="305.0">
                                  <items>
-                                    <AnchorPane fx:id="chemin_client" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                        <children>
-                                          <Label layoutX="6.0" layoutY="10.0" text="chemin :" />
+                                          <GridPane prefHeight="30.0" prefWidth="306.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.199951171875" minWidth="10.0" prefWidth="55.39997482299805" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.60002517700195" minWidth="10.0" prefWidth="250.60002517700195" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="chemin :" />
+                                                <TextFlow fx:id="chemin_client" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                             </children>
+                                          </GridPane>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="122.0" prefWidth="200.0">
                                        <children>
-                                          <TextFlow fx:id="liste_client" layoutX="6.0" layoutY="2.0" prefHeight="200.0" prefWidth="296.0" />
+                                          <TreeView fx:id="liste_client" layoutX="3.0" layoutY="7.0" prefHeight="194.0" prefWidth="298.0" />
                                        </children>
                                     </AnchorPane>
                                  </items>
@@ -61,5 +90,10 @@
             </AnchorPane>
          </items>
       </SplitPane>
+      <ButtonBar prefHeight="26.0" prefWidth="601.0">
+        <buttons>
+          <Button fx:id="logout" mnemonicParsing="false" text="DÃ©connexion" />
+        </buttons>
+      </ButtonBar>
    </children>
 </AnchorPane>

@@ -6,6 +6,7 @@ public class User {
     private String nom = "";
     private boolean is_connected = false;
     private String chemin = "/";
+    private int id = 0;
 
     public User() {
     }
@@ -37,6 +38,10 @@ public class User {
             this.chemin = "/";
         else
             this.chemin = chemin;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     // Vérifie que le mot de passe en argument est le même que celui du dossier utilisateur
