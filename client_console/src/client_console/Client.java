@@ -1,4 +1,4 @@
-package client;
+package client_console;
 
 import java.io.*;
 import java.net.*;
