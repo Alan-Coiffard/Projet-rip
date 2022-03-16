@@ -69,7 +69,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="quitterButton" mnemonicParsing="false" onAction="#fermer" text="Quitter" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <Button mnemonicParsing="false" onAction="#fermer" text="Quitter" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>

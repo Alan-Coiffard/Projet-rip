@@ -32,8 +32,6 @@ public class Client extends Thread {
                 
                     switch (msg_serveur.charAt(0)) {
                         case '0':       
-                            System.out.println(msg_serveur);
-                        break;
                         case '1':
                             System.out.println(msg_serveur);
                         break;
@@ -44,22 +42,19 @@ public class Client extends Thread {
                 } while (msg_serveur.charAt(0) != '0');          
                 ps.println(msg_client.getMessage());
             }
-            
+
+            is.close();
             ps.close();
             socketOfClient.close();
         } catch (IOException e) {
-            System.err.println("Client.java erreur!!");
+            System.err.println("Client déconnecter");
         }
     }
 
     public synchronized void stopServeur()
     {
         this.continuer = false;        
-        try {
-            is.close();
-            msg_client.notifyAll();
-        } catch (IOException e) {
-        }
+        msg_client.setMessage("bye");        
     }
 
     public synchronized void commandeUSER(String nom) {

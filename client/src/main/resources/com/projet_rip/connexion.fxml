@@ -42,7 +42,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet_rip.ConnexionController">
+<VBox fx:id="scenePane" alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.projet_rip.ConnexionController">
    <children>
       <Label alignment="CENTER" prefHeight="32.0" prefWidth="438.0" text="Connexion test au serveur FTP">
          <font>
