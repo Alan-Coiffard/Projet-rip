@@ -1,2 +1,2 @@
-module client {
+module client_console {
 }
