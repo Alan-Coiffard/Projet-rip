@@ -9,8 +9,12 @@ public class CommandeUSER extends Commande {
 	}
 
 	public void execute() {
-		if (commandeArgs.length == 0)
+		// Vérification de l'argument
+		if (commandeArgs.length == 0) {
+			ps.println("2 Aucun utilisateur en entrée");
+			ps.println("0");
 			return;
+		}
 
 		// Ce serveur accepte uniquement le user personne
 		String[] listeFichiers = new File(Serveur.getPath()).list();
@@ -28,12 +32,13 @@ public class CommandeUSER extends Commande {
 		String nom_user;
 		for (int i = 0; i < listeFichiers.length; i++) {
 			nom_user = commandeArgs[0].toLowerCase();
-			if (commandeArgs[0].toLowerCase().equals(nom_user)) {
+			System.out.println("user>> " + listeFichiers[i]);
+			if (listeFichiers[i].toLowerCase().equals(nom_user)) {
 				if (Serveur.IsUserConnected(nom_user))
 					break;
 				existe = true;
-				this.utilisateur.setNom(commandeArgs[0].toLowerCase());
-				ps.println("0 Commande user OK");
+				this.utilisateur.setNom(nom_user);
+				ps.println("0  utilisateur OK");
 				break;
 			}
 		}
@@ -42,6 +47,12 @@ public class CommandeUSER extends Commande {
 			ps.println("2 L'utilisateur " + commandeArgs[0] + " n'existe pas ou est déjà connecté.");
 			ps.println("0");
 		}		
+	}
+
+	public void help() {
+		ps.println("1 -- Commande USER --");
+		ps.println("1 usage: user string:<nom_utilisateur>");
+		ps.println("1 description: Indique le nom d'utilisateur pour pouvoir se connecter au serveur ftp.");
 	}
 
 }

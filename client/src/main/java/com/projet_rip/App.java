@@ -20,12 +20,13 @@ public class App extends Application {
     private static Client client;
     public static Client getClient() { return client; }
 
+    // Lancement de l'application
     @Override
     public void start(Stage stage) throws IOException {
         client = new Client();
-
         client.start();
 
+        // Chargemnt de la page de connexion
         scene = new Scene(loadFXML("connexion"), 640, 480);
         stage.setResizable(false);
 
@@ -33,20 +34,22 @@ public class App extends Application {
         stage.show();
     }
 
+    // Changement de scene
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
+    // Chargment d'une scene
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     public static void main(String[] args) {
-        launch();
-        
+        launch();        
     }
 
+    // Arret du client
     @Override
     public void stop(){
         client.stopServeur();

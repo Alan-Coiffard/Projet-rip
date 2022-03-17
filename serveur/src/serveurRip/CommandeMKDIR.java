@@ -15,11 +15,13 @@ public class CommandeMKDIR extends Commande {
 			return;
 
 		try {
+			// Récupération du chemin
 			File path = new File(this.utilisateur.getAbsoluteChemin() + "/" + this.commandeArgs[0]);
 			String path_str = path.getCanonicalPath();
 			String user_path = this.utilisateur.getUserPath();
 
             try {
+				// Vérification et création
                 if (path_str.substring(0, user_path.length()).equals(user_path)) {
                     if (path.mkdir()) {
                         ps.println("1 Creation reussi!");
@@ -35,7 +37,12 @@ public class CommandeMKDIR extends Commande {
 		} catch (IOException e) {
 			System.err.println("IOexecption erreur dans commandeMKDIR");
 		}
+	}
 
+	public void help() {
+		ps.println("1 -- Commande MKDIR --");
+		ps.println("1 usage: mkdir path:<nouveau_dossier>");
+		ps.println("1 description: Créer un nouveau dossier à l'endroit indiqué en argument.");
 	}
 
 }

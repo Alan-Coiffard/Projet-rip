@@ -5,6 +5,7 @@ public class MessageClient {
 	private int compteur = 0;
 	private String message = "";
     
+    // Récupération d'un message de façon synchrone
 	public synchronized String getMessage() {
         while (compteur <= 0)
             try {
@@ -17,6 +18,7 @@ public class MessageClient {
         return msg;
     }
     
+    // Envoie d'un message de façon synchrone
 	public synchronized void setMessage(String msg) {    	
     	while (compteur != 0)
             try {

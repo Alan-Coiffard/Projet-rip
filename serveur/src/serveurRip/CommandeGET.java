@@ -15,11 +15,20 @@ public class CommandeGET extends Commande {
 			ps.println("Il manque le nom du fichier à envoyer");
 			return;
 		}
+
+		// Execution pour chaque argument
 		for (int i = 0; i < Math.min(10, this.commandeArgs.length); i++) {
 			try {
 				String nomFichier = this.commandeArgs[i];
 				String[] nf = nomFichier.split("/");
-				File fichierACopier = new File(this.utilisateur.getAbsoluteChemin() + "/" + nomFichier);
+
+				
+				File fichierACopier;
+				if (this.commandeArgs[0].charAt(0) == '/')
+					fichierACopier = new File(this.utilisateur.getUserPath() + "/" + this.commandeArgs[0]);
+				else
+					fichierACopier = new File(this.utilisateur.getAbsoluteChemin() + "/" + this.commandeArgs[0]);
+
 				String chemin = fichierACopier.getCanonicalPath();
 				
 				// Vérification de sécurite
@@ -56,5 +65,11 @@ public class CommandeGET extends Commande {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void help() {
+		ps.println("1 -- Commande GET --");
+		ps.println("1 usage: get path:<fichier> . . .");
+		ps.println("1 description: Télécharge un ou plusieurs fichiers dans le répertoire courant du client.");
 	}
 }

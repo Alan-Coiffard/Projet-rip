@@ -21,6 +21,16 @@ public class CommandExecutor {
 				(new CommandeSTOR(ps, commande, user)).execute();
 			else if (commande.split(" ")[0].toLowerCase().equals("mkdir"))
 				(new CommandeMKDIR(ps, commande, user)).execute();
+			else if (commande.split(" ")[0].toLowerCase().equals("touch"))
+				(new CommandeTOUCH(ps, commande, user)).execute();
+			else if (commande.split(" ")[0].toLowerCase().equals("help"))
+				(new CommandeHELP(ps, commande, user)).execute();
+			else if (commande.split(" ")[0].toLowerCase().equals("echo"))
+				(new CommandeECHO(ps, commande, user)).execute();
+			else if (commande.split(" ")[0].toLowerCase().equals("cat"))
+				(new CommandeCAT(ps, commande, user)).execute();
+			else if (commande.split(" ")[0].toLowerCase().equals("rm"))
+				(new CommandeRM(ps, commande, user)).execute();
 			else
 				ps.println("1 Commande introuvable");
 		} else {

@@ -8,6 +8,12 @@ public class CommandePWD extends Commande {
 	}
 
 	public void execute() {
-		ps.println("1 " + Commande.getPwd() + this.utilisateur.getAbsoluteChemin().substring(1));
+		ps.println("1 " + this.utilisateur.getChemin());
+	}
+
+	public void help() {
+		ps.println("1 -- Commande PWD --");
+		ps.println("1 usage: pwd");
+		ps.println("1 description: Affiche le répertoire actuel du client sur le serveur");
 	}
 }

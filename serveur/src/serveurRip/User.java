@@ -43,6 +43,9 @@ public class User {
     public int getId() {
         return this.id;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     // Vérifie que le mot de passe en argument est le même que celui du dossier utilisateur
     // retourne vrai si la connecion est validée
@@ -70,6 +73,7 @@ public class User {
         return this.is_connected;
     }
 
+    // Un utilisateur est représenté par son nom
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

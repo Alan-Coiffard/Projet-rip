@@ -5,6 +5,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import javafx.scene.control.TextArea;
+
 public class Client extends Thread {
     
     final String serverHost = "localhost";
@@ -16,17 +18,22 @@ public class Client extends Thread {
 
     private MessageClient msg_client = new MessageClient();
 
+    private StringBuilder logs = new StringBuilder("");
+    private TextArea console_log = null;
+
     public void run()
     {
         try {
+            // Connexion au serveur
             socketOfClient = new Socket(serverHost, 3030);
             ps = new PrintStream(socketOfClient.getOutputStream());
             is = new BufferedReader(new InputStreamReader(socketOfClient.getInputStream()));
             
             String msg_serveur;
+            String msg = "";
 
-            while (this.continuer) {
-                
+            // Gestion de la réception des paquets
+            while (this.continuer && !msg.equals("bye")) {
                 do {
                 msg_serveur = is.readLine();
                 
@@ -34,15 +41,31 @@ public class Client extends Thread {
                         case '0':       
                         case '1':
                             System.out.println(msg_serveur);
+                            if (msg_serveur.length() >= 2)
+                                logMessage(msg_serveur.substring(2));
                         break;
                         case '2':
-                            System.err.println(msg_serveur);
+                        System.err.println(msg_serveur);
+                        if (msg_serveur.length() >= 2)
+                        logMessage(msg_serveur.substring(2));
+                        break;
+                        case '3':
+                        break;
+                        case '4':
+                        break;
+                        case '5':
+                            App.setRoot("primary");
                         break;
                     }
-                } while (msg_serveur.charAt(0) != '0');          
-                ps.println(msg_client.getMessage());
+                } while (msg_serveur.charAt(0) != '0');
+
+                // Envoie du prochain message
+                msg = msg_client.getMessage();     
+                logMessage(">> " + msg);
+                ps.println(msg);
             }
 
+            // Fermeture
             is.close();
             ps.close();
             socketOfClient.close();
@@ -51,11 +74,32 @@ public class Client extends Thread {
         }
     }
 
+    // Ajout d'un message dans les logs
+    public synchronized void logMessage(String msg) {
+        this.logs.append(msg + "\n");
+        if (console_log != null) {
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException e) {}
+            this.console_log.setText(logs.toString());
+            console_log.appendText("");
+        }
+    }
+
+    // Connexion à l'UI des logs
+    public void setupConsoleLog(TextArea textarea) {
+        this.console_log = textarea;        
+        this.console_log.setText(logs.toString());
+    }
+
+    // Arret serveur
     public synchronized void stopServeur()
     {
         this.continuer = false;        
         msg_client.setMessage("bye");        
     }
+
+    // -- Commandes --
 
     public synchronized void commandeUSER(String nom) {
         msg_client.setMessage("user " + nom);
@@ -65,11 +109,7 @@ public class Client extends Thread {
         msg_client.setMessage("pass " + mdp);
     }
 
-    public synchronized void commandeCD(String arg) {
-        msg_client.setMessage("cd " + arg);
-    }
-
-    public synchronized void commandeLS() {
-        msg_client.setMessage("ls");
+    public synchronized void commande(String cmd) {
+        msg_client.setMessage(cmd);
     }
 }
